@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Task;
+
 class TasksController extends Controller
 {
     /**
@@ -14,6 +16,11 @@ class TasksController extends Controller
     public function index()
     {
         //getでtasks/にアクセスされた場合の「一覧表示処理」
+        $tasks = Task::all();
+        
+        return view ("tasks.index", [
+            "tasks" => $tasks,
+            ]);
     }
 
     /**
@@ -24,6 +31,12 @@ class TasksController extends Controller
     public function create()
     {
         //getでtasks/createにアクセスされた場合の「新規登録画面表示処理」
+        
+        $task = new Task;
+        
+        return view("tasks.create",[
+            "task" => $task,
+            ]);
     }
 
     /**
@@ -35,6 +48,12 @@ class TasksController extends Controller
     public function store(Request $request)
     {
         //postでtasks/にアクセスされた場合の「新規登録処理」
+        $task = new Task;
+        $task->content = $request->content;
+        $task->save();
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
@@ -46,6 +65,11 @@ class TasksController extends Controller
     public function show($id)
     {
         //getでtasks/(任意のid)にアクセスされた場合の「取得表示処理」
+        $task = Task::findOrFail($id);
+         
+         return view('tasks.show', [
+            'task' => $task,
+         ]);
     }
 
     /**
@@ -57,6 +81,12 @@ class TasksController extends Controller
     public function edit($id)
     {
         //getでtasks/(任意のid)/editにアクセスされた場合の「更新画面表示処理」
+        $task = Task::findOrFail($id);
+
+        //タスク編集ビューでそれを表示
+        return view('tasks.edit', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -69,6 +99,14 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         //putまたはpatchでtasks/(任意のid)にアクセスされた場合の「更新処理」
+         // idの値でタスクを検索して取得
+        $task = Task::findOrFail($id);
+        // タスクを更新
+        $task->content = $request->content;
+        $task->save();
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
