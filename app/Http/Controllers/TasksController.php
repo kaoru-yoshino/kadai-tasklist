@@ -16,11 +16,19 @@ class TasksController extends Controller
     public function index()
     {
         //getでtasks/にアクセスされた場合の「一覧表示処理」
-        $tasks = Task::all();
+        $data =[];
+        if(\Auth::check()) { //認証済みの場合
+            $user = \Auth::user();
+            $tasks = $user->tasks()->orderBy('created_at', 'asc')->paginate(10);
+             
+             $data = [
+                 'user' => $user,
+                 'tasks' => $tasks,
+                 ];
+        }
         
-        return view ("tasks.index", [
-            "tasks" => $tasks,
-            ]);
+        
+        return view ("tasks.index", $data);
     }
 
     /**
@@ -55,6 +63,9 @@ class TasksController extends Controller
         
         //postでtasks/にアクセスされた場合の「新規登録処理」
         $task = new Task;
+        // TODO: ログインしているユーザーのIDを$task->user_idにいれる
+        // 上記は\Auth::id()で取得可能
+        $task->user_id = \Auth::id(); //登録したユーザーのidを引っ張ってくる
         $task->status = $request->status;   //statusの追加
         $task->content = $request->content;
         $task->save();
@@ -114,11 +125,12 @@ class TasksController extends Controller
         //putまたはpatchでtasks/(任意のid)にアクセスされた場合の「更新処理」
          // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
+        if (\Auth::id() === $task->user_id) {
         // タスクを更新
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
-
+        }
         // トップページへリダイレクトさせる
         return redirect('/');
     }
@@ -135,8 +147,9 @@ class TasksController extends Controller
          // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
         // メッセージを削除
-        $task->delete();
-
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
         // トップページへリダイレクトさせる
         return redirect('/');
     }

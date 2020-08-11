@@ -3,6 +3,7 @@
 @section('content')
 
 <!-- ここにページ毎のコンテンツを書く -->
+
 <h1>id: {{ $task->id }} のタスク編集ページ</h1>
 
     <div class="row">
@@ -25,5 +26,4 @@
             {!! Form::close() !!}
         </div>
     </div>
-
 @endsection
