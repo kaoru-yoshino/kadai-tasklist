@@ -13,7 +13,7 @@
 
 Route::get('/', "TasksController@index");
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('tasks', 'TasksController', ['only' => ['index', 'show', 'create', 'store', 'edit', 'destroy', 'update']]);
+    Route::resource('tasks', 'TasksController', ['only' => ['show', 'create', 'store', 'edit', 'destroy', 'update']]);
 });
 
 // ユーザ登録
