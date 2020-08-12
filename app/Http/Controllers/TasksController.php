@@ -17,7 +17,7 @@ class TasksController extends Controller
     {
         //getでtasks/にアクセスされた場合の「一覧表示処理」
         $data =[];
-        if(\Auth::id() === $task->user_id) { 
+        if(\Auth::check() && \Auth::id() === $task->user_id) { 
             $user = \Auth::user();
             $tasks = $user->tasks()->orderBy('created_at', 'asc')->paginate(10);
              
@@ -27,7 +27,7 @@ class TasksController extends Controller
                  ];
         }
          // トップページへリダイレクトさせる
-            return redirect('/');
+            return view('tasks.index', $data);
     }
 
     /**
