@@ -27,7 +27,7 @@ class TasksController extends Controller
                  ];
         }
          // トップページへリダイレクトさせる
-            return redirect('/');
+            return view('tasks.index');
     }
 
     /**
