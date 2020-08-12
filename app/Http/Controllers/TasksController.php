@@ -21,13 +21,13 @@ class TasksController extends Controller
             $user = \Auth::user();
             $tasks = $user->tasks()->orderBy('created_at', 'asc')->paginate(10);
              
-             $data = [
+            $data = [
                  'user' => $user,
                  'tasks' => $tasks,
                  ];
-        // トップページへリダイレクトさせる
-            return redirect('/');
         }
+         // トップページへリダイレクトさせる
+            return redirect('/');
     }
 
     /**
