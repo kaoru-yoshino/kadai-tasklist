@@ -17,7 +17,7 @@ class TasksController extends Controller
     {
         //getでtasks/にアクセスされた場合の「一覧表示処理」
         $data =[];
-        if(\Auth::check()) { //認証済みの場合
+        if(\Auth::id() === $task->user_id) { 
             $user = \Auth::user();
             $tasks = $user->tasks()->orderBy('created_at', 'asc')->paginate(10);
              
