@@ -26,9 +26,8 @@ class TasksController extends Controller
                  'tasks' => $tasks,
                  ];
         }
-        
-        
-        return view ("tasks.index", $data);
+         // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
