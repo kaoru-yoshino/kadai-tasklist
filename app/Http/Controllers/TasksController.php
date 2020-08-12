@@ -81,9 +81,10 @@ class TasksController extends Controller
      */
     public function show($id)
     {
+        if (\Auth::id() === $task->user_id) {
         //getでtasks/(任意のid)にアクセスされた場合の「取得表示処理」
         $task = Task::findOrFail($id);
-         if (\Auth::id() === $task->user_id) {
+         
          return view('tasks.show', [
             'task' => $task,
          ]);
@@ -99,9 +100,9 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
+        if (\Auth::id() === $task->user_id) {
         //getでtasks/(任意のid)/editにアクセスされた場合の「更新画面表示処理」
         $task = Task::findOrFail($id);
-        if (\Auth::id() === $task->user_id) {
         //タスク編集ビューでそれを表示
         return view('tasks.edit', [
             'task' => $task,
