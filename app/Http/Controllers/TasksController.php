@@ -25,9 +25,9 @@ class TasksController extends Controller
                  'user' => $user,
                  'tasks' => $tasks,
                  ];
+        // トップページへリダイレクトさせる
+            return redirect('/');
         }
-         // トップページへリダイレクトさせる
-        return redirect('/');
     }
 
     /**
