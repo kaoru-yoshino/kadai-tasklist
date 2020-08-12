@@ -70,7 +70,7 @@ class TasksController extends Controller
         $task->save();
 
         // トップページへリダイレクトさせる
-        return redirect('/');
+        return redirect('tasks.index');
     }
 
     /**
@@ -88,7 +88,7 @@ class TasksController extends Controller
             'task' => $task,
          ]);
          }
-         return redirect('/');
+         return redirect('tasks.index');
     }
 
     /**
@@ -107,7 +107,7 @@ class TasksController extends Controller
             'task' => $task,
         ]);
         }
-        return redirect('/');
+        return redirect('tasks.index');
     }
 
     /**
@@ -135,7 +135,7 @@ class TasksController extends Controller
         $task->save();
         }
         // トップページへリダイレクトさせる
-        return redirect('/');
+        return redirect('tasks.index');
     }
 
     /**
@@ -154,6 +154,6 @@ class TasksController extends Controller
             $task->delete();
         }
         // トップページへリダイレクトさせる
-        return redirect('/');
+        return redirect('tasks.index');
     }
 }
